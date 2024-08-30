@@ -1,32 +1,60 @@
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    password: String!
+    roles: [String!]!
+}
+
 type Book {
-    id: ID!,
-    name: String!,
-    author: String!,
-    publishYear: Int!,
+    id: ID!
+    name: String!
+    author: String!
+    publishYear: Int!
     price: Float!
 }
 
 input CreateBookInput {
-    name: String!,
-    author: String!,
-    publishYear: Int!,
+    name: String!
+    author: String!
+    publishYear: Int!
     price: Float!
 }
 
-input UpdateBookInput{
-    name: String!,
-    author: String!,
-    publishYear: Int!,
-    price: Float!
+input UpdateBookInput {
+    name: String
+    author: String
+    publishYear: Int
+    price: Float
+}
+
+input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+    roles: [String!]!
+}
+
+input LogInInput {
+    email: String!
+    password: String!
+}
+
+type AuthData {
+    token: String!
+    user: User!
 }
 
 type Query {
     books: [Book]!
     book(id: ID!): Book
+    currentUser: User
 }
 
 type Mutation {
     createBook(data: CreateBookInput!): Book
     updateBook(id: ID!, data: UpdateBookInput!): Book
     deleteBook(id: ID!): Boolean
+    register(data: RegisterInput!): User!
+    login(data: LogInInput!): AuthData!
 }
