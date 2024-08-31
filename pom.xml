@@ -123,6 +123,21 @@
             <artifactId>jaxb-runtime</artifactId>
             <version>2.3.1</version>
         </dependency>
+
+        <!-- Kotlin Coroutines Core -->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>1.7.1</version> <!-- Check for the latest version -->
+        </dependency>
+
+        <!-- Kotlin Coroutines Core JVM -->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core-jvm</artifactId>
+            <version>1.7.1</version> <!-- Check for the latest version -->
+        </dependency>
+
     </dependencies>
 
     <build>
