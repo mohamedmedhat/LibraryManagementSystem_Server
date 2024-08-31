@@ -12,6 +12,7 @@ type Book {
     author: String!
     publishYear: Int!
     price: Float!
+    user: User
 }
 
 input CreateBookInput {
