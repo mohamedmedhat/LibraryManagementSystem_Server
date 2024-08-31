@@ -1,7 +1,6 @@
 package com.example.demo.config
 
-import com.example.demo.filter.JwtRequestFilter
-import com.example.demo.security.MyUserDetailsService
+import com.example.demo.filter.JwtAuthorizationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -17,13 +16,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
-    private val myUserDetailsService: MyUserDetailsService,
-    private val jwtRequestFilter: JwtRequestFilter
+    private val jwtAuthorizationFilter: JwtAuthorizationFilter
 ) {
 
     @Bean
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    @Bean
+    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
+        return authenticationConfiguration.authenticationManager
     }
 
     @Bean
@@ -37,15 +40,9 @@ class SecurityConfig(
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            .csrf {
-                it.ignoringRequestMatchers("/graphql", "/graphiql/**")
-            }
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
-        return http.build()
-    }
+            .csrf { it.disable() }
+            .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
-    @Bean
-    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
-        return authenticationConfiguration.authenticationManager
+        return http.build()
     }
 }

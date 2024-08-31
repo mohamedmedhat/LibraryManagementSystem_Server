@@ -10,23 +10,19 @@ import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.graphql.data.method.annotation.QueryMapping
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Controller
 
 @Controller
 class UserResolver(
-    private val userService: UserService,
-    private val authenticationManager: AuthenticationManager
+    private val userService: UserService
 ) {
 
-    @QueryMapping
-    fun currentUser(): User? {
-        val authentication = SecurityContextHolder.getContext().authentication
-        val username = authentication?.name ?: return null
-        return userService.findUserByUsername(username)
-    }
+//    @QueryMapping
+//    fun currentUser(): User? {
+//        val authentication = SecurityContextHolder.getContext().authentication
+//        val username = authentication?.name ?: return null
+//        return userService.findUserByUsername(username)
+//    }
 
     @MutationMapping
     fun register(@Valid @Argument data: RegisterInput): User {
@@ -41,19 +37,9 @@ class UserResolver(
     @MutationMapping
     fun login(@Valid @Argument data: LogInInput): AuthData {
         try {
-            val authToken = UsernamePasswordAuthenticationToken(data.email, data.password)
-            val authentication = authenticationManager.authenticate(authToken)
-            SecurityContextHolder.getContext().authentication = authentication
-
-            val userDetails = authentication.principal as? UserDetails
-                ?: throw RuntimeException("Failed to cast principal to UserDetails")
-
-            val token = userService.login(userDetails.username, data.password)
-            val user = userService.findUserByUsername(userDetails.username)
-
-            return AuthData(token = token, user = user)
+            return userService.login(data.email, data.password)
         } catch (e: Exception) {
-            e.printStackTrace()
+            println("Login failed: ${e.message}")
             throw RuntimeException("Login failed: ${e.message}")
         }
     }

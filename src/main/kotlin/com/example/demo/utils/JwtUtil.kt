@@ -1,6 +1,5 @@
 package com.example.demo.utils
 
-import com.example.demo.model.User
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -12,11 +11,7 @@ import java.util.*
 class JwtUtil {
 
     fun extractUsername(token: String): String {
-        return extractClaim(token) { claims: Claims -> claims.subject }
-    }
-
-    fun extractExpiration(token: String): Date {
-        return extractClaim(token) { claims: Claims -> claims.expiration }
+        return extractClaim(token, Claims::getSubject)
     }
 
     fun <T> extractClaim(token: String, claimsResolver: (Claims) -> T): T {
@@ -28,13 +23,9 @@ class JwtUtil {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).body
     }
 
-    fun isTokenExpired(token: String): Boolean {
-        return extractExpiration(token).before(Date())
-    }
-
-    fun generateToken(userDetails: User): String {
-        val claims = HashMap<String, Any>()
-        return createToken(claims, userDetails.name)
+    fun generateToken(userDetails: UserDetails): String {
+        val claims = mutableMapOf<String, Any>()
+        return createToken(claims, userDetails.username)
     }
 
     private fun createToken(claims: Map<String, Any>, subject: String): String {
@@ -52,7 +43,12 @@ class JwtUtil {
         return (username == userDetails.username && !isTokenExpired(token))
     }
 
+    private fun isTokenExpired(token: String): Boolean {
+        val expiration = extractClaim(token, Claims::getExpiration)
+        return expiration.before(Date())
+    }
+
     companion object {
-        const val SECRET_KEY = "your_secret_key"
+        const val SECRET_KEY = "yoursecretkey"
     }
 }
