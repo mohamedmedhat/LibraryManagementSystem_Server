@@ -5,21 +5,27 @@ import com.example.demo.dto.user.RegisterInput
 import com.example.demo.model.User
 import com.example.demo.repository.UserRepository
 import com.example.demo.utils.JwtUtil
-import graphql.GraphQLException
+import org.springframework.context.MessageSource
+import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder,
     private val customUserDetailsService: CustomUserDetailsService,
+    private val messageSource: MessageSource,
     private val jwtUtil: JwtUtil
 ) {
 
+
     fun register(data: RegisterInput): User {
         if (userRepository.findByEmail(data.email).isPresent) {
-            throw GraphQLException("Email is already registered")
+            val locale = LocaleContextHolder.getLocale()
+            val message = messageSource.getMessage("error.emailAlreadyRegistered", null, locale)
+            throw RuntimeException(message)
         }
         val encodedPassword = passwordEncoder.encode(data.password)
         val user = User(
@@ -38,7 +44,9 @@ class UserService(
             val user = userRepository.findByEmail(email).get()
             return AuthData(user = user, token = token)
         } else {
-            throw GraphQLException("Invalid credentials.")
+            val locale = LocaleContextHolder.getLocale()
+            val message = messageSource.getMessage("error.invalidCredentials", null, locale)
+            throw RuntimeException(message)
         }
     }
 }
