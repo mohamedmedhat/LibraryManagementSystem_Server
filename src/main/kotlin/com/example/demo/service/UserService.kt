@@ -9,7 +9,8 @@ import org.springframework.context.MessageSource
 import org.springframework.context.i18n.LocaleContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
-import java.util.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Service
 class UserService(
@@ -20,8 +21,7 @@ class UserService(
     private val jwtUtil: JwtUtil
 ) {
 
-
-    fun register(data: RegisterInput): User {
+    suspend fun register(data: RegisterInput): User = withContext(Dispatchers.IO) {
         if (userRepository.findByEmail(data.email).isPresent) {
             val locale = LocaleContextHolder.getLocale()
             val message = messageSource.getMessage("error.emailAlreadyRegistered", null, locale)
@@ -34,15 +34,15 @@ class UserService(
             password = encodedPassword,
             roles = data.roles
         )
-        return userRepository.save(user)
+        userRepository.save(user)
     }
 
-    fun login(email: String, password: String): AuthData {
+    suspend fun login(email: String, password: String): AuthData = withContext(Dispatchers.IO) {
         val userDetails = customUserDetailsService.loadUserByUsername(email)
         if (passwordEncoder.matches(password, userDetails.password)) {
             val token = jwtUtil.generateToken(userDetails)
             val user = userRepository.findByEmail(email).get()
-            return AuthData(user = user, token = token)
+            AuthData(user = user, token = token)
         } else {
             val locale = LocaleContextHolder.getLocale()
             val message = messageSource.getMessage("error.invalidCredentials", null, locale)

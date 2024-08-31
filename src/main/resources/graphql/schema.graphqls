@@ -15,6 +15,14 @@ type Book {
     user: User
 }
 
+type BookPage {
+    content: [Book!]!
+    totalPages: Int!
+    totalElements: Int!
+    size: Int!
+    number: Int!
+}
+
 input CreateBookInput {
     name: String!
     author: String!
@@ -47,7 +55,7 @@ type AuthData {
 }
 
 type Query {
-    books: [Book]!
+    books(page: Int!, pageSize: Int!): BookPage!
     book(id: ID!): Book
     currentUser: User
 }

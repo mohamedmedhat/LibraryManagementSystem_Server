@@ -6,7 +6,7 @@ import com.example.demo.dto.user.RegisterInput
 import com.example.demo.model.User
 import com.example.demo.service.UserService
 import jakarta.validation.Valid
-import org.springframework.context.i18n.LocaleContextHolder
+import kotlinx.coroutines.runBlocking
 import org.springframework.graphql.data.method.annotation.Argument
 import org.springframework.graphql.data.method.annotation.MutationMapping
 import org.springframework.stereotype.Controller
@@ -17,9 +17,9 @@ class UserResolver(
 ) {
 
     @MutationMapping
-    fun register(@Valid @Argument data: RegisterInput): User {
+    fun register(@Valid @Argument data: RegisterInput): User = runBlocking {
         try {
-            return userService.register(data)
+            return@runBlocking userService.register(data)
         } catch (e: Exception) {
             println("Failed to register user: ${e.message}")
             throw RuntimeException("Failed to register user: ${e.message}")
@@ -27,9 +27,9 @@ class UserResolver(
     }
 
     @MutationMapping
-    fun login(@Valid @Argument data: LogInInput): AuthData {
+    fun login(@Valid @Argument data: LogInInput): AuthData = runBlocking {
         try {
-            return userService.login(data.email, data.password)
+            return@runBlocking userService.login(data.email, data.password)
         } catch (e: Exception) {
             println("Login failed: ${e.message}")
             throw RuntimeException("Login failed: ${e.message}")
