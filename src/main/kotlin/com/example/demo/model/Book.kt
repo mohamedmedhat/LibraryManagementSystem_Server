@@ -2,7 +2,6 @@ package com.example.demo.model
 
 import jakarta.persistence.*
 
-
 @Entity
 data class Book(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,5 +17,9 @@ data class Book(
     val publishYear: Int,
 
     @Column(unique = true)
-    val price: Float
+    val price: Float,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    val user: User? = null
 )
