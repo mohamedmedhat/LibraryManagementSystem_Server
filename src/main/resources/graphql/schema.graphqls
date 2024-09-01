@@ -49,10 +49,15 @@ input LogInInput {
     password: String!
 }
 
+input ResetPasswordInput{
+    email: String!
+}
+
 type AuthData {
     token: String!
     user: User!
 }
+
 
 type Query {
     books(page: Int!, pageSize: Int!): BookPage!
@@ -66,4 +71,5 @@ type Mutation {
     deleteBook(id: ID!): Boolean
     register(data: RegisterInput!): User!
     login(data: LogInInput!): AuthData!
+    resetPassword(data: ResetPasswordInput!): Boolean!
 }

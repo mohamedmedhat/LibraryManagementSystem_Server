@@ -3,6 +3,7 @@ package com.example.demo.resolver
 import com.example.demo.dto.user.AuthData
 import com.example.demo.dto.user.LogInInput
 import com.example.demo.dto.user.RegisterInput
+import com.example.demo.dto.user.ResetPasswordInput
 import com.example.demo.model.User
 import com.example.demo.service.UserService
 import jakarta.validation.Valid
@@ -33,6 +34,15 @@ class UserResolver(
         } catch (e: Exception) {
             println("Login failed: ${e.message}")
             throw RuntimeException("Login failed: ${e.message}")
+        }
+    }
+
+    @MutationMapping
+    fun resetPassword(@Argument data: ResetPasswordInput): Boolean = runBlocking {
+        try {
+            return@runBlocking userService.resetPasswordByEmail(data)
+        } catch (e: Exception) {
+            throw RuntimeException("reset password failed ${e.message}")
         }
     }
 }
