@@ -1,5 +1,6 @@
-package com.example.demo.model
+package com.example.demo.user
 
+import com.example.demo.book.Book
 import jakarta.persistence.*
 
 @Entity

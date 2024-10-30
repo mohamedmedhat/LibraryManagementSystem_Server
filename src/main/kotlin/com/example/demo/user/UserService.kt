@@ -1,11 +1,10 @@
-package com.example.demo.service
+package com.example.demo.user
 
-import com.example.demo.dto.email.EmailDto
-import com.example.demo.dto.user.AuthData
-import com.example.demo.dto.user.RegisterInput
-import com.example.demo.dto.user.ResetPasswordInput
-import com.example.demo.model.User
-import com.example.demo.repository.UserRepository
+import com.example.demo.email.EmailDto
+import com.example.demo.user.dto.AuthData
+import com.example.demo.user.dto.RegisterInput
+import com.example.demo.user.dto.ResetPasswordInput
+import com.example.demo.email.EmailService
 import com.example.demo.utils.JwtUtil
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context

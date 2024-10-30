@@ -1,11 +1,9 @@
-package com.example.demo.resolver
+package com.example.demo.user
 
-import com.example.demo.dto.user.AuthData
-import com.example.demo.dto.user.LogInInput
-import com.example.demo.dto.user.RegisterInput
-import com.example.demo.dto.user.ResetPasswordInput
-import com.example.demo.model.User
-import com.example.demo.service.UserService
+import com.example.demo.user.dto.AuthData
+import com.example.demo.user.dto.LogInInput
+import com.example.demo.user.dto.RegisterInput
+import com.example.demo.user.dto.ResetPasswordInput
 import jakarta.validation.Valid
 import kotlinx.coroutines.runBlocking
 import org.springframework.graphql.data.method.annotation.Argument

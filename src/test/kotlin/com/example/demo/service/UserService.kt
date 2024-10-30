@@ -1,6 +1,7 @@
 package com.example.demo.service
 
-import com.example.demo.dto.user.RegisterInput
+import com.example.demo.user.dto.RegisterInput
+import com.example.demo.user.UserService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

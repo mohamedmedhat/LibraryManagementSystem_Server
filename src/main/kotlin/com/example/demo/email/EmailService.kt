@@ -1,6 +1,5 @@
-package com.example.demo.service
+package com.example.demo.email
 
-import com.example.demo.dto.email.EmailDto
 import jakarta.mail.MessagingException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
