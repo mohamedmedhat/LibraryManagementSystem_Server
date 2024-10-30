@@ -138,6 +138,19 @@
             <version>1.7.1</version> <!-- Check for the latest version -->
         </dependency>
 
+        <!-- emails -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <!-- Thymeleaf (template engine) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>

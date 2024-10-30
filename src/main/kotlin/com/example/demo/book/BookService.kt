@@ -1,10 +1,8 @@
-package com.example.demo.service
+package com.example.demo.book
 
-import com.example.demo.dto.book.CreateBookInput
-import com.example.demo.dto.book.UpdateBookInput
-import com.example.demo.model.Book
-import com.example.demo.repository.BookRepository
-import com.example.demo.repository.UserRepository
+import com.example.demo.book.dto.CreateBookInput
+import com.example.demo.book.dto.UpdateBookInput
+import com.example.demo.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.data.domain.Page

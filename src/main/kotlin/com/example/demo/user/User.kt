@@ -1,5 +1,6 @@
-package com.example.demo.model
+package com.example.demo.user
 
+import com.example.demo.book.Book
 import jakarta.persistence.*
 
 @Entity
@@ -12,7 +13,7 @@ data class User(
 
     val email: String,
 
-    val password: String,
+    var password: String,
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_roles", joinColumns = [JoinColumn(name = "user_id")])

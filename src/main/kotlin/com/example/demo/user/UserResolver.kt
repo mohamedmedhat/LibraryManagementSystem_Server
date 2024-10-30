@@ -1,10 +1,9 @@
-package com.example.demo.resolver
+package com.example.demo.user
 
-import com.example.demo.dto.user.AuthData
-import com.example.demo.dto.user.LogInInput
-import com.example.demo.dto.user.RegisterInput
-import com.example.demo.model.User
-import com.example.demo.service.UserService
+import com.example.demo.user.dto.AuthData
+import com.example.demo.user.dto.LogInInput
+import com.example.demo.user.dto.RegisterInput
+import com.example.demo.user.dto.ResetPasswordInput
 import jakarta.validation.Valid
 import kotlinx.coroutines.runBlocking
 import org.springframework.graphql.data.method.annotation.Argument
@@ -33,6 +32,15 @@ class UserResolver(
         } catch (e: Exception) {
             println("Login failed: ${e.message}")
             throw RuntimeException("Login failed: ${e.message}")
+        }
+    }
+
+    @MutationMapping
+    fun resetPassword(@Argument data: ResetPasswordInput): Boolean = runBlocking {
+        try {
+            return@runBlocking userService.resetPasswordByEmail(data)
+        } catch (e: Exception) {
+            throw RuntimeException("reset password failed ${e.message}")
         }
     }
 }

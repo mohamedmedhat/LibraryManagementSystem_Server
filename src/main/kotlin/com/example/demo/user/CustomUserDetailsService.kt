@@ -1,6 +1,5 @@
-package com.example.demo.service
+package com.example.demo.user
 
-import com.example.demo.repository.UserRepository
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

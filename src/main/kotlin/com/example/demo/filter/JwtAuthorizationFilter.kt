@@ -1,6 +1,6 @@
 package com.example.demo.filter
 
-import com.example.demo.service.CustomUserDetailsService
+import com.example.demo.user.CustomUserDetailsService
 import com.example.demo.utils.JwtUtil
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest

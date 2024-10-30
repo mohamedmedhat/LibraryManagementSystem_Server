@@ -1,9 +1,7 @@
-package com.example.demo.resolver
+package com.example.demo.book
 
-import com.example.demo.dto.book.CreateBookInput
-import com.example.demo.dto.book.UpdateBookInput
-import com.example.demo.model.Book
-import com.example.demo.service.BookService
+import com.example.demo.book.dto.CreateBookInput
+import com.example.demo.book.dto.UpdateBookInput
 import jakarta.validation.Valid
 import kotlinx.coroutines.runBlocking
 import org.springframework.data.domain.Page
