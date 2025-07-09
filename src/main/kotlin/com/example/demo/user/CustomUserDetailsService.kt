@@ -1,6 +1,6 @@
-package com.example.demo.service
+package com.example.demo.user
 
-import com.example.demo.repository.UserRepository
+import com.example.demo.user.exception.UserNotFoundException
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -12,13 +12,13 @@ class CustomUserDetailsService(
 ) : UserDetailsService {
 
     override fun loadUserByUsername(email: String): UserDetails {
-        val user = userRepository.findByEmail(email).orElseThrow {
-            IllegalArgumentException("User not found")
+        val user = userRepository.findByEmailProjection(email).orElseThrow {
+            UserNotFoundException("User not found")
         }
         return org.springframework.security.core.userdetails.User(
-            user.email,
-            user.password,
-            user.roles.map { SimpleGrantedAuthority(it) }
+            user.getEmail(),
+            user.getPassword(),
+            user.getRoles().map { SimpleGrantedAuthority(it.toString()) }
         )
     }
 }

@@ -1,10 +1,11 @@
-package com.example.demo.dto.user
+package com.example.demo.user.dto.reuest
 
+import com.example.demo.shared.enums.Role
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-data class RegisterInput(
+data class UserRequestDto(
     @field:NotBlank(message = "Name is mandatory")
     @field:Size(min = 6, max = 25, message = "Name should be between 6 and 25 characters")
     val name: String,
@@ -17,5 +18,5 @@ data class RegisterInput(
     @field:Size(min = 6, max = 25, message = "Password should be between 6 and 25 characters")
     val password: String,
 
-    val roles: Set<String> = setOf("USER")
+    val roles: Set<Role> = setOf(Role.USER)
 )

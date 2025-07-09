@@ -1,10 +1,9 @@
-package com.example.demo.service
+package com.example.demo.book
 
-import com.example.demo.dto.book.CreateBookInput
-import com.example.demo.dto.book.UpdateBookInput
-import com.example.demo.model.Book
-import com.example.demo.repository.BookRepository
-import com.example.demo.repository.UserRepository
+import com.example.demo.book.dto.request.CreateBookInput
+import com.example.demo.book.dto.request.UpdateBookInput
+import com.example.demo.user.UserRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.springframework.data.domain.Page
@@ -16,20 +15,21 @@ import org.springframework.stereotype.Service
 
 @Service
 class BookService(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val bookRepository: BookRepository,
     private val userRepository: UserRepository
 ) {
 
-    suspend fun getAllBooks(page: Int, pageSize: Int): Page<Book> = withContext(Dispatchers.IO) {
+    suspend fun getAllBooks(page: Int, pageSize: Int): Page<Book> = withContext(dispatcher) {
         val pageable: Pageable = PageRequest.of(page, pageSize)
         return@withContext bookRepository.findAll(pageable)
     }
 
-    suspend fun getBookById(id: Long): Book? = withContext(Dispatchers.IO) {
+    suspend fun getBookById(id: Long): Book? = withContext(dispatcher) {
         return@withContext bookRepository.findById(id).orElse(null)
     }
 
-    suspend fun createBook(data: CreateBookInput): Book = withContext(Dispatchers.IO) {
+    suspend fun createBook(data: CreateBookInput): Book = withContext(dispatcher) {
         val userDetails = SecurityContextHolder.getContext().authentication.principal as UserDetails
         val user = userRepository.findByEmail(userDetails.username).orElse(null)
         val book = Book(
@@ -42,7 +42,7 @@ class BookService(
         return@withContext bookRepository.save(book)
     }
 
-    suspend fun updateBook(id: Long, data: UpdateBookInput): Book? = withContext(Dispatchers.IO) {
+    suspend fun updateBook(id: Long, data: UpdateBookInput): Book? = withContext(dispatcher) {
         val book = bookRepository.findById(id).orElse(null) ?: return@withContext null
         val updatedBook = book.copy(
             name = data.name,
@@ -53,7 +53,7 @@ class BookService(
         return@withContext bookRepository.save(updatedBook)
     }
 
-    suspend fun deleteBook(id: Long): Boolean = withContext(Dispatchers.IO) {
+    suspend fun deleteBook(id: Long): Boolean = withContext(dispatcher) {
         return@withContext if (bookRepository.existsById(id)) {
             bookRepository.deleteById(id)
             true
