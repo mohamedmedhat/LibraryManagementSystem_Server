@@ -1,9 +1,7 @@
-package com.example.demo.resolver
+package com.example.demo.book
 
-import com.example.demo.dto.book.CreateBookInput
-import com.example.demo.dto.book.UpdateBookInput
-import com.example.demo.model.Book
-import com.example.demo.service.BookService
+import com.example.demo.book.dto.request.CreateBookInput
+import com.example.demo.book.dto.request.UpdateBookInput
 import jakarta.validation.Valid
 import kotlinx.coroutines.runBlocking
 import org.springframework.data.domain.Page
@@ -39,7 +37,7 @@ class BookResolver(private val bookService: BookService) {
     }
 
     @MutationMapping
-    fun deleteBook(@Argument id: Long): Boolean = runBlocking {
+    fun deleteBook(@Argument id: Long) = runBlocking {
         return@runBlocking bookService.deleteBook(id)
     }
 }

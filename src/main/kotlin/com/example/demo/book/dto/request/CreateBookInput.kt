@@ -1,4 +1,4 @@
-package com.example.demo.dto.book
+package com.example.demo.book.dto.request
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size

@@ -1,6 +1,7 @@
 package com.example.demo.service
 
-import com.example.demo.dto.user.RegisterInput
+import com.example.demo.user.dto.reuest.UserRequestDto
+import com.example.demo.user.UserService
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -23,7 +24,7 @@ class UserServiceIntegrationTest {
     fun `register should return localized error messages in Arabic`() {
         LocaleContextHolder.setLocale(Locale("ar"))
 
-        val data = RegisterInput(
+        val data = UserRequestDto(
             name = "Test User",
             email = "ahmed@gmail.com",
             password = "password",

@@ -1,10 +1,10 @@
-package com.example.demo.dto.user
+package com.example.demo.user.dto.reuest
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
-data class LogInInput(
+data class LoginRequestDto(
     @field:NotBlank(message = "email is mandatory")
     @field:Email(message = "email should be in valid format")
     val email: String,

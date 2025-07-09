@@ -1,8 +1,9 @@
-package com.example.demo.model
+package com.example.demo.book
 
+import com.example.demo.user.User
 import jakarta.persistence.*
 
-@Entity
+@Entity(name = "books")
 data class Book(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

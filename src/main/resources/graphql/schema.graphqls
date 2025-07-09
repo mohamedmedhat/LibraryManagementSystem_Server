@@ -3,7 +3,7 @@ type User {
     name: String!
     email: String!
     password: String!
-    roles: [String!]!
+    roles: [Role!]!
 }
 
 type Book {
@@ -60,10 +60,25 @@ type Query {
     currentUser: User
 }
 
+input UserRequestDto {
+    name: String!
+    email: String!
+    password: String!
+    roles: [Role!] = [USER]
+}
+
+enum Role {
+    USER
+    ADMIN
+    LIBRARIAN,
+    MANAGER
+}
+
+
 type Mutation {
     createBook(data: CreateBookInput!): Book
     updateBook(id: ID!, data: UpdateBookInput!): Book
     deleteBook(id: ID!): Boolean
-    register(data: RegisterInput!): User!
+    register(data: UserRequestDto!): User!
     login(data: LogInInput!): AuthData!
 }

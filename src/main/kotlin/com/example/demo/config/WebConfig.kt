@@ -12,6 +12,8 @@ class WebConfig : WebMvcConfigurer {
         registry.addMapping("/**")
             .allowedOrigins("*")
             .allowedMethods("*")
+            .allowedHeaders("*")
+            .allowCredentials(false)
     }
 
     @Bean
