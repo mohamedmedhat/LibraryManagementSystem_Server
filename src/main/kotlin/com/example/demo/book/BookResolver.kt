@@ -37,7 +37,7 @@ class BookResolver(private val bookService: BookService) {
     }
 
     @MutationMapping
-    fun deleteBook(@Argument id: Long): Boolean = runBlocking {
+    fun deleteBook(@Argument id: Long) = runBlocking {
         return@runBlocking bookService.deleteBook(id)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.shared.exceptions
 
+import com.example.demo.book.exception.BookNotFoundException
 import com.example.demo.user.exception.BadCredentialsException
 import com.example.demo.user.exception.UserAlreadyExistException
 import com.example.demo.user.exception.UserNotFoundException
@@ -27,6 +28,11 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(BadCredentialsException::class)
     fun handleBadCredentials(ex: BadCredentialsException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
+        return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED, request.requestURI)
+    }
+
+    @ExceptionHandler(BookNotFoundException::class)
+    fun handleBookNotFound(ex: BookNotFoundException, request: HttpServletRequest): ResponseEntity<ErrorResponse> {
         return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED, request.requestURI)
     }
 
